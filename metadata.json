@@ -1,0 +1,6 @@
+{
+  "name": "Ultimate Bike Racing 3D",
+  "description": "A high-octane 3D motorcycle racing game with 50 progressive levels, sports bike garage, upgrades, traffic dodging, nitro boosts, and rich environments.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

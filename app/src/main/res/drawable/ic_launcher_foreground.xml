@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Group centered in 108x108 with 24x24 standard vector scaled up ~2.7x and centered -->
+    <group
+        android:translateX="20"
+        android:translateY="20"
+        android:scaleX="2.8"
+        android:scaleY="2.8">
+
+        <!-- Speed wind trail -->
+        <path
+            android:fillColor="#00E5FF"
+            android:pathData="M1,7 L7,7 L5,9 L0,9 Z" />
+        <path
+            android:fillColor="#FF9100"
+            android:pathData="M0,11 L5,11 L3,13 L-1,13 Z" />
+
+        <!-- Bold Sport Motorcycle -->
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M19.44,9.03 L15.41,5 H11 V7 H14.59 L16.59,9 H5 C2.2,9 0,11.2 0,14 S2.2,19 5,19 C7.46,19 9.45,17.31 9.9,15 H14.1 C14.55,17.31 16.54,19 19,19 C21.8,19 24,16.8 24,14 C24,11.54 22.31,9.55 19.85,9.1 V9.03 Z M5,17 C3.34,17 2,15.66 2,14 S3.34,11 5,11 S8,12.34 8,14 S6.66,17 5,17 Z M19,17 C17.34,17 16,15.66 16,14 S17.34,11 19,11 S22,12.34 22,14 S20.66,17 19,17 Z" />
+
+        <!-- Neon Racing Fairing Accent -->
+        <path
+            android:fillColor="#FF6D00"
+            android:pathData="M11,7 L14,7 L16.5,10.5 L12.5,11.5 Z" />
+
+        <!-- Wheel Rim Centers -->
+        <path
+            android:fillColor="#00E5FF"
+            android:pathData="M5,13.2 A0.8,0.8 0 1,0 5,14.8 A0.8,0.8 0 1,0 5,13.2 Z M19,13.2 A0.8,0.8 0 1,0 19,14.8 A0.8,0.8 0 1,0 19,13.2 Z" />
+    </group>
+</vector>

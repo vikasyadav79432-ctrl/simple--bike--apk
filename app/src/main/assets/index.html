@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Ultimate Bike Racing 3D</title>
+  <link rel="stylesheet" href="css/game.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- 3D WebGL Canvas Layer -->
+  <div id="game-canvas-container"></div>
+
+  <!-- UI Screens & Modals Layer -->
+  <div id="ui-overlay">
+
+    <!-- MAIN MENU SCREEN -->
+    <div id="menu-screen" class="screen-view">
+      <!-- Top Status Bar -->
+      <div class="top-nav-bar">
+        <div class="player-profile-badge">
+          <span id="menu-player-lvl" class="player-lvl-tag">Lvl 1</span>
+          <div class="xp-bar-track">
+            <div id="menu-xp-bar-fill"></div>
+          </div>
+        </div>
+        <div class="coins-pill">
+          <span>🪙</span>
+          <span id="menu-coins-val">1,000</span>
+        </div>
+      </div>
+
+      <!-- Center Logo & Branding -->
+      <div class="menu-brand-header">
+        <h1 class="game-main-title">Ultimate Bike<br>Racing 3D</h1>
+        <p class="game-sub-title">High Speed Motorcycle Championship</p>
+      </div>
+
+      <!-- Bottom Main Action Buttons -->
+      <div class="menu-actions-container">
+        <button id="menu-play-btn" class="btn-primary-play">
+          <span>▶</span>
+          <span>RACE NOW</span>
+        </button>
+
+        <div class="menu-secondary-buttons-row">
+          <button id="menu-garage-btn" class="btn-menu-icon">
+            <span style="font-size: 18px;">🏍️</span>
+            <span>GARAGE</span>
+          </button>
+          <button id="menu-upgrades-btn" class="btn-menu-icon">
+            <span style="font-size: 18px;">⚡</span>
+            <span>UPGRADES</span>
+          </button>
+          <button id="menu-levels-btn" class="btn-menu-icon">
+            <span style="font-size: 18px;">🏁</span>
+            <span>LEVELS</span>
+          </button>
+          <button id="menu-daily-btn" class="btn-menu-icon">
+            <span style="font-size: 18px;">🎁</span>
+            <span>REWARDS</span>
+          </button>
+          <button id="menu-settings-btn" class="btn-menu-icon">
+            <span style="font-size: 18px;">⚙️</span>
+            <span>SETTINGS</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- GARAGE & UPGRADES SCREEN -->
+    <div id="garage-screen" class="screen-view hidden">
+      <div class="screen-header-bar">
+        <button id="garage-back-btn" class="btn-back-square">←</button>
+        <div class="screen-header-title">Bike Garage & Tuning</div>
+        <div class="coins-pill">
+          <span>🪙</span>
+          <span id="garage-coins-val">1,000</span>
+        </div>
+      </div>
+
+      <div class="garage-content">
+        <!-- Bikes Showcase Carousel -->
+        <div>
+          <div class="garage-section-title">Select Motorcycle</div>
+          <div id="garage-bikes-carousel" class="bikes-carousel"></div>
+        </div>
+
+        <!-- Custom Paint Palette -->
+        <div>
+          <div class="garage-section-title">Custom Paint Finish</div>
+          <div id="garage-color-swatches" class="color-swatches-row"></div>
+        </div>
+
+        <!-- Performance Upgrades List -->
+        <div>
+          <div class="garage-section-title">Performance Upgrades (10 Stages)</div>
+          <div id="garage-upgrades-grid" class="upgrades-grid"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 50 PROGRESSIVE LEVELS SCREEN -->
+    <div id="levels-screen" class="screen-view hidden">
+      <div class="screen-header-bar">
+        <button id="levels-back-btn" class="btn-back-square">←</button>
+        <div class="screen-header-title">Level Selection (50 Tracks)</div>
+        <div style="width: 40px;"></div>
+      </div>
+      <div id="levels-grid-container" class="levels-grid"></div>
+    </div>
+
+    <!-- IN-GAME HUD -->
+    <div id="hud-screen" class="screen-view hidden">
+      <!-- Top HUD Header -->
+      <div class="hud-top-bar">
+        <div id="hud-level-title" class="hud-level-indicator">Lvl 1: Beginner Rider</div>
+        <div class="hud-progress-container">
+          <span style="font-size: 12px; font-weight: 800;">🏍️</span>
+          <div class="hud-progress-track">
+            <div id="hud-progress-fill"></div>
+          </div>
+          <span id="hud-current-dist" style="font-size: 12px; font-weight: 800; color: #a5f3fc;">0m</span>
+          <span style="font-size: 11px; color: #94a3b8;">/</span>
+          <span id="hud-target-dist" style="font-size: 11px; color: #94a3b8;">1000m</span>
+        </div>
+        <div class="coins-pill" style="padding: 4px 10px; font-size: 13px;">
+          <span>🪙</span>
+          <span id="hud-coins-count">0</span>
+        </div>
+        <button id="hud-pause-btn" class="hud-pause-btn">❚❚</button>
+      </div>
+
+      <!-- Speedometer Gauge -->
+      <div class="hud-speedometer-panel">
+        <div class="hud-speed-display">
+          <span id="hud-speed-val">0</span>
+          <span class="hud-speed-unit">KM/H</span>
+        </div>
+        <div class="hud-speed-gauge-track">
+          <div id="hud-speed-gauge-fill"></div>
+        </div>
+      </div>
+
+      <!-- Nitro Gauge -->
+      <div class="hud-nitro-container">
+        <span class="hud-nitro-label">NITRO ⚡</span>
+        <div class="hud-nitro-track">
+          <div id="hud-nitro-fill"></div>
+        </div>
+      </div>
+
+      <!-- Mobile Touch Controls -->
+      <div class="hud-touch-controls">
+        <!-- Steering on Left Thumb -->
+        <div class="touch-cluster-left">
+          <div id="btn-touch-left" class="touch-btn touch-btn-steer">◀</div>
+          <div id="btn-touch-right" class="touch-btn touch-btn-steer">▶</div>
+        </div>
+
+        <!-- Throttle, Brake & Nitro on Right Thumb -->
+        <div class="touch-cluster-right">
+          <div id="btn-touch-brake" class="touch-btn touch-btn-brake">🛑</div>
+          <div id="btn-touch-nitro" class="touch-btn touch-btn-nitro">⚡</div>
+          <div id="btn-touch-accel" class="touch-btn touch-btn-accel">▲</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAILY REWARDS MODAL -->
+    <div id="daily-modal" class="game-modal-backdrop hidden">
+      <div class="game-modal-card">
+        <div class="modal-header-title victory">Daily Login Bonus</div>
+        <p style="text-align: center; font-size: 13px; color: #cbd5e1;">Claim your free daily racing rewards and build your streak!</p>
+        <div id="daily-rewards-container" class="daily-rewards-grid"></div>
+        <button id="daily-claim-btn" class="btn-modal-action btn-modal-primary">CLAIM REWARD</button>
+        <button id="daily-close-btn" class="btn-modal-action btn-modal-secondary">CLOSE</button>
+      </div>
+    </div>
+
+    <!-- SETTINGS MODAL -->
+    <div id="settings-modal" class="game-modal-backdrop hidden">
+      <div class="game-modal-card">
+        <div class="modal-header-title" style="color: var(--neon-cyan);">Game Settings</div>
+        <div class="settings-list">
+          <div class="setting-item-row">
+            <span>Sound Effects</span>
+            <label class="toggle-switch">
+              <input type="checkbox" id="setting-sound-toggle" checked>
+              <span class="slider-round"></span>
+            </label>
+          </div>
+          <div class="setting-item-row">
+            <span>Racing Synth Music</span>
+            <label class="toggle-switch">
+              <input type="checkbox" id="setting-music-toggle" checked>
+              <span class="slider-round"></span>
+            </label>
+          </div>
+          <div class="setting-item-row">
+            <span>Haptic Feedback</span>
+            <label class="toggle-switch">
+              <input type="checkbox" id="setting-haptics-toggle" checked>
+              <span class="slider-round"></span>
+            </label>
+          </div>
+          <div class="setting-item-row">
+            <span>Graphics Quality</span>
+            <div class="gfx-buttons-row">
+              <button class="gfx-btn" data-gfx="low">LOW</button>
+              <button class="gfx-btn" data-gfx="medium">MED</button>
+              <button class="gfx-btn active" data-gfx="high">HIGH</button>
+            </div>
+          </div>
+        </div>
+        <button id="settings-close-btn" class="btn-modal-action btn-modal-primary">SAVE & EXIT</button>
+      </div>
+    </div>
+
+    <!-- PAUSE MODAL -->
+    <div id="pause-modal" class="game-modal-backdrop hidden">
+      <div class="game-modal-card">
+        <div class="modal-header-title">RACE PAUSED</div>
+        <div class="modal-buttons-column">
+          <button id="pause-resume-btn" class="btn-modal-action btn-modal-primary">RESUME RACE</button>
+          <button id="pause-restart-btn" class="btn-modal-action btn-modal-secondary">RESTART LEVEL</button>
+          <button id="pause-quit-btn" class="btn-modal-action btn-modal-secondary">MAIN MENU</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- GAME OVER / CRASH MODAL -->
+    <div id="gameover-modal" class="game-modal-backdrop hidden">
+      <div class="game-modal-card">
+        <div class="modal-header-title gameover">CRASHED! 💥</div>
+        <p style="text-align: center; font-size: 13px; color: #fca5a5;">Watch out for traffic! Keep your distance on tight overtakes.</p>
+        <div class="modal-stats-box">
+          <div class="modal-stat-row">
+            <span>Distance Reached:</span>
+            <span id="gameover-dist" class="modal-stat-value">0m</span>
+          </div>
+          <div class="modal-stat-row">
+            <span>Coins Collected:</span>
+            <span id="gameover-coins" class="modal-stat-value">+0 Coins</span>
+          </div>
+        </div>
+        <div class="modal-buttons-column">
+          <button id="gameover-retry-btn" class="btn-modal-action btn-modal-primary">TRY AGAIN</button>
+          <button id="gameover-garage-btn" class="btn-modal-action btn-modal-secondary">UPGRADE BIKE</button>
+          <button id="gameover-menu-btn" class="btn-modal-action btn-modal-secondary">MAIN MENU</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- VICTORY / NEXT LEVEL MODAL -->
+    <div id="victory-modal" class="game-modal-backdrop hidden">
+      <div class="game-modal-card">
+        <div class="modal-header-title victory">VICTORY! 🏆</div>
+        <div id="victory-level-title" style="text-align: center; font-size: 15px; font-weight: 800; color: #a5f3fc;">Level Completed</div>
+        <div id="victory-stars-row" class="stars-row">
+          <span class="star-icon active">★</span>
+          <span class="star-icon active">★</span>
+          <span class="star-icon active">★</span>
+        </div>
+        <div class="modal-stats-box">
+          <div class="modal-stat-row">
+            <span>Finish Time:</span>
+            <span id="victory-time" class="modal-stat-value">0s</span>
+          </div>
+          <div class="modal-stat-row">
+            <span>Total Coins:</span>
+            <span id="victory-coins" class="modal-stat-value">+0 Coins</span>
+          </div>
+          <div class="modal-stat-row">
+            <span>XP Gained:</span>
+            <span id="victory-xp" class="modal-stat-value">+0 XP</span>
+          </div>
+          <div class="modal-stat-row">
+            <span>Close Calls:</span>
+            <span id="victory-nearmiss" class="modal-stat-value">0</span>
+          </div>
+        </div>
+        <div class="modal-buttons-column">
+          <button id="victory-next-btn" class="btn-modal-action btn-modal-primary">NEXT LEVEL ⏩</button>
+          <button id="victory-replay-btn" class="btn-modal-action btn-modal-secondary">REPLAY RACE</button>
+          <button id="victory-garage-btn" class="btn-modal-action btn-modal-secondary">GARAGE & UPGRADES</button>
+          <button id="victory-menu-btn" class="btn-modal-action btn-modal-secondary">MAIN MENU</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Scripts: Three.js engine and modular game architecture -->
+  <script src="js/three.min.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/gameData.js"></script>
+  <script src="js/models.js"></script>
+  <script src="js/particles.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>
